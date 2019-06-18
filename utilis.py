@@ -1,6 +1,7 @@
 import time
 import requests
 import random
+import pickle
 from functools import wraps
 from lxml import etree
 from random import choice
@@ -140,13 +141,18 @@ def run_after_secs(secs):
     return wrapper
 
 
-@run_after_secs(2)
-def dummy():
-    print('hi')
 
+def dump2formal(proxies):
+    '''
+    将proxies转化为正常的proxies
+    :param proxies: pickled data
+    :return:
+    '''
+    formal = []
+    for proxy in proxies:
+        formal.append(pickle.loads(proxy))
+    return formal
 
-if __name__ == '__main__':
-    dummy()
 
 
 

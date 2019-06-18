@@ -5,6 +5,7 @@ import aiohttp
 import sys
 from utilis import get_page, getHtmlTree, get_random_ua
 from aiohttp import ClientError
+from settings import TEST_URL
 
 
 VALID_STATUS_CODES = [200, 301, 302]
@@ -131,7 +132,7 @@ class ProxyTester(object):
     async def test_single_proxy(self, proxy):
         """
         测试单个代理
-        :param proxy: 
+        :param proxy:
         :return:
         """
         conn = aiohttp.TCPConnector(verify_ssl=False)
@@ -158,6 +159,8 @@ class ProxyTester(object):
         print('测试器开始运行')
         try:
             test_proxies = self.collections
+            new_loop = asyncio.new_event_loop() # 多线程情况下需要如此
+            asyncio.set_event_loop(new_loop)
             loop = asyncio.get_event_loop()
             tasks = [asyncio.ensure_future(self.test_single_proxy(proxy)) for proxy in test_proxies] 
             loop.run_until_complete(asyncio.wait(tasks))
@@ -192,8 +195,7 @@ def run_getter_and_tester(test_url=None):
     return pt.validatepool
 
 
-if __name__ == '__main__': 
-    TEST_URL = 'https://wwww.baidu.com'
+if __name__ == '__main__':
     data = run_getter_and_tester(TEST_URL)
     print(data)
 

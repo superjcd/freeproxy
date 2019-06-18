@@ -72,6 +72,9 @@ class RedisProxyStore:
         self.add(random_element)
         return random_element
 
+    def get_all(self):
+        return self.conn.smembers(self.skey)
+
     def __len__(self):
         return self.conn.scard(self.skey)
 
