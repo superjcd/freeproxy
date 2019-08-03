@@ -8,6 +8,6 @@ REDIS_CONFIG ={
 TEST_URL = 'https://www.douban.com'  # 测试对象网站（爬虫目标网站）
 
 
-INTERVAL = 500  # 代理获取间隔
+INTERVAL = 300  # 代理获取间隔
 
 FREEPROXY_REDIS_NAME = 'douban_proxy'
